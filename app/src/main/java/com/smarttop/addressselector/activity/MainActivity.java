@@ -6,14 +6,15 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.smarttop.addressselector.R;
-import com.smarttop.addressselector.bean.City;
-import com.smarttop.addressselector.bean.County;
-import com.smarttop.addressselector.bean.Province;
-import com.smarttop.addressselector.bean.Street;
-import com.smarttop.addressselector.utils.LogUtil;
-import com.smarttop.addressselector.widget.AddressSelector;
-import com.smarttop.addressselector.widget.BottomDialog;
-import com.smarttop.addressselector.widget.OnAddressSelectedListener;
+import com.smarttop.library.bean.City;
+import com.smarttop.library.bean.County;
+import com.smarttop.library.bean.Province;
+import com.smarttop.library.bean.Street;
+import com.smarttop.library.utils.LogUtil;
+import com.smarttop.library.widget.AddressSelector;
+import com.smarttop.library.widget.BottomDialog;
+import com.smarttop.library.widget.OnAddressSelectedListener;
+
 
 /**
  * Created by smartTop on 2016/12/6.
