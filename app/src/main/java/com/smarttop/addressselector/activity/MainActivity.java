@@ -3,6 +3,7 @@ package com.smarttop.addressselector.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.smarttop.addressselector.R;
@@ -27,12 +28,23 @@ public class MainActivity extends Activity implements View.OnClickListener, OnAd
     private String cityCode;
     private String countyCode;
     private String streetCode;
+    private LinearLayout content;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tv_selector_area = (TextView) findViewById(R.id.tv_selector_area);
+        content = (LinearLayout) findViewById(R.id.content);
         tv_selector_area.setOnClickListener(this);
+        AddressSelector selector = new AddressSelector(this);
+        selector.setOnAddressSelectedListener(new OnAddressSelectedListener() {
+            @Override
+            public void onAddressSelected(Province province, City city, County county, Street street) {
+
+            }
+        });
+        View view = selector.getView();
+        content.addView(view);
     }
 
     @Override
