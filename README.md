@@ -8,7 +8,7 @@
 
     dependencies {
         ...
-       compile 'com.smartTop:address-selector:1.0.0'
+       compile 'com.smartTop:address-selector:1.0.1'
     }
     
 ## 使用方法
