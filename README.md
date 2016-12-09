@@ -4,7 +4,7 @@
      ![image](https://github.com/smartTop/AddressSelector/blob/master/screenshots/screenshot1.gif)
 ## 添加依赖
 
-模块的 `build.gradle` 中：
+在`build.gradle` 中：
 
     dependencies {
         ...
@@ -12,8 +12,6 @@
     }
     
 ## 使用方法
-
-### 使用原始视图
 
     AddressSelector selector = new AddressSelector(context);
     selector.setOnAddressSelectedListener(new AddressSelector.OnAddressSelectedListener() {
@@ -24,10 +22,7 @@
     });
             
     View view = selector.getView();
-    // frameLayout.addView(view)
-    // new AlertDialog.Builder(context).setView(view).show()
-    // ...
-    
+    content.addView(view);
 ### BottomDialog
 
     BottomDialog dialog = new BottomDialog(context);

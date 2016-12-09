@@ -47,6 +47,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnAd
         content.addView(view);
     }
 
+
     @Override
     public void onClick(View view) {
         if (dialog != null) {
