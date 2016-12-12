@@ -48,8 +48,7 @@
         changeRecordsBean.id = 35;
 
         addressDictManager.inserddress(changeRecordsBean);
-
-         ![image](https://github.com/smartTop/AddressSelector/blob/master/screenshots/screenshort3.png)
+![image](https://github.com/smartTop/AddressSelector/blob/master/screenshots/screenshort3.png)
 ###
  还可以进行已下操作 增加一个数据 inserddress(AdressBean.ChangeRecordsBean adress)  增加一个集合insertAddress(List<AdressBean.ChangeRecordsBean> list)
 
