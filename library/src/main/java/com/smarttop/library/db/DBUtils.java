@@ -13,7 +13,7 @@ public class DBUtils {
     //版本号
     public static final int VERSION = 1;
     //数据库名
-    public static final String DB_NAME = "adress.db";
+    public static final String DB_NAME = "address.db";
     private DBUtils(Context context){
         DBOpenHelper dbHelper = new DBOpenHelper(context,DB_NAME,null, VERSION);
         db = dbHelper.getReadableDatabase();

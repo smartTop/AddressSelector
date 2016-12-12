@@ -37,6 +37,13 @@ public class MainActivity extends Activity implements View.OnClickListener, OnAd
         content = (LinearLayout) findViewById(R.id.content);
         tv_selector_area.setOnClickListener(this);
         AddressSelector selector = new AddressSelector(this);
+//        //获取数据库管理
+//        AddressDictManager addressDictManager = selector.getAddressDictManager();
+//        AdressBean.ChangeRecordsBean changeRecordsBean = new AdressBean.ChangeRecordsBean();
+//        changeRecordsBean.parentId = 0;
+//        changeRecordsBean.name = "测试省";
+//        changeRecordsBean.id = 35;
+//        addressDictManager.inserddress(changeRecordsBean);//对数据库里增加一个数据
         selector.setOnAddressSelectedListener(new OnAddressSelectedListener() {
             @Override
             public void onAddressSelected(Province province, City city, County county, Street street) {

@@ -34,7 +34,7 @@ public class AddressDictManager {
         // 获取管理对象，因为数据库需要通过管理对象才能够获取
         AssetsDatabaseManager mg = AssetsDatabaseManager.getManager();
         // 通过管理对象获取数据库
-        db = mg.getDatabase("adress.db");
+        db = mg.getDatabase("address.db");
     }
 
     /**
@@ -46,14 +46,10 @@ public class AddressDictManager {
             db.beginTransaction();//手动设置开启事务
             try{
                 ContentValues values = new ContentValues();
-                values.put(TableField.ADDRESS_DICT_FIELD_LEVEL,adress.level);
                 values.put(TableField.ADDRESS_DICT_FIELD_CODE,adress.code);
                 values.put(TableField.ADDRESS_DICT_FIELD_NAME,adress.name);
-                values.put(TableField.ADDRESS_DICT_FIELD_CREATETIME,adress.createTime);
-                values.put(ADDRESS_DICT_FIELD_PARENTID,adress.parentId);
-                values.put(TableField.ADDRESS_DICT_FIELD_SORT,adress.sort);
-                values.put(TableField.ADDRESS_DICT_FIELD_FLAG,adress.flag);
-                values.put(TableField.ADDRESS_DICT_FIELD_SYNCTIME,adress.syncTime);
+                values.put(TableField.ADDRESS_DICT_FIELD_PARENTID,adress.parentId);
+                values.put(TableField.ADDRESS_DICT_FIELD_ID,adress.id);
                 db.insert(TableField.TABLE_ADDRESS_DICT,null,values);
                 db.setTransactionSuccessful(); //设置事务处理成功
             }catch (Exception e){
@@ -72,14 +68,10 @@ public class AddressDictManager {
             try{
                 for (AdressBean.ChangeRecordsBean adress:list) {
                     ContentValues values = new ContentValues();
-                    values.put(TableField.ADDRESS_DICT_FIELD_LEVEL,adress.level);
                     values.put(TableField.ADDRESS_DICT_FIELD_CODE,adress.code);
                     values.put(TableField.ADDRESS_DICT_FIELD_NAME,adress.name);
-                    values.put(TableField.ADDRESS_DICT_FIELD_CREATETIME,adress.createTime);
                     values.put(ADDRESS_DICT_FIELD_PARENTID,adress.parentId);
-                    values.put(TableField.ADDRESS_DICT_FIELD_SORT,adress.sort);
-                    values.put(TableField.ADDRESS_DICT_FIELD_FLAG,adress.flag);
-                    values.put(TableField.ADDRESS_DICT_FIELD_SYNCTIME,adress.syncTime);
+                    values.put(TableField.ADDRESS_DICT_FIELD_ID,adress.id);
                     db.insert(TableField.TABLE_ADDRESS_DICT,null,values);
                 }
                 db.setTransactionSuccessful(); //设置事务处理成功
@@ -95,14 +87,10 @@ public class AddressDictManager {
             db.beginTransaction();//手动设置开启事务
             try{
                 ContentValues values = new ContentValues();
-                values.put(TableField.ADDRESS_DICT_FIELD_LEVEL,adress.level);
                 values.put(TableField.ADDRESS_DICT_FIELD_CODE,adress.code);
                 values.put(TableField.ADDRESS_DICT_FIELD_NAME,adress.name);
-                values.put(TableField.ADDRESS_DICT_FIELD_CREATETIME,adress.createTime);
                 values.put(ADDRESS_DICT_FIELD_PARENTID,adress.parentId);
-                values.put(TableField.ADDRESS_DICT_FIELD_SORT,adress.sort);
-                values.put(TableField.ADDRESS_DICT_FIELD_FLAG,adress.flag);
-                values.put(TableField.ADDRESS_DICT_FIELD_SYNCTIME,adress.syncTime);
+                values.put(TableField.ADDRESS_DICT_FIELD_ID,adress.id);
                 String[] args = {String.valueOf(adress.id)};
                 db.update(TableField.TABLE_ADDRESS_DICT,values,TableField.FIELD_ID+ "=?",args);
                 db.setTransactionSuccessful(); //设置事务处理成功
@@ -126,11 +114,6 @@ public class AddressDictManager {
             adressInfo.parentId = cursor.getInt(cursor.getColumnIndex(ADDRESS_DICT_FIELD_PARENTID));
             adressInfo.code = cursor.getString(cursor.getColumnIndex(TableField.ADDRESS_DICT_FIELD_CODE));
             adressInfo.name = cursor.getString(cursor.getColumnIndex(TableField.ADDRESS_DICT_FIELD_NAME));
-            adressInfo.level = cursor.getInt(cursor.getColumnIndex(TableField.ADDRESS_DICT_FIELD_LEVEL));
-            adressInfo.createTime = cursor.getLong(cursor.getColumnIndex(TableField.ADDRESS_DICT_FIELD_CREATETIME));
-            adressInfo.sort = cursor.getInt(cursor.getColumnIndex(TableField.ADDRESS_DICT_FIELD_SORT));
-            adressInfo.flag = cursor.getInt(cursor.getColumnIndex(TableField.ADDRESS_DICT_FIELD_FLAG));
-            adressInfo.syncTime = cursor.getLong(cursor.getColumnIndex(TableField.ADDRESS_DICT_FIELD_SYNCTIME));
             list.add(adressInfo);
         }
         cursor.close();
@@ -221,14 +204,5 @@ public class AddressDictManager {
         cursor.close();
         return count;
     }
-    //获取最大的时间，用户调取用户增量信息
-    public long getMaxSyncTime(){
-        long time = 0L;
-        Cursor cursor = db.rawQuery("select MAX(syncTime) from " + TableField.TABLE_ADDRESS_DICT, null);
-        if (cursor.moveToFirst()) {
-            time = cursor.getLong(0);
-        }
-        cursor.close();
-        return time;
-    }
+
 }

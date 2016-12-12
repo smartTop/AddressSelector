@@ -33,14 +33,13 @@ public class AdressBean {
     public List<ChangeRecordsBean> changeRecords = new ArrayList<>();
 
     public static class ChangeRecordsBean {
-        public int flag;
+        /*** id*/
         public int id;
-        public long syncTime;
+        /*** 地址编号*/
         public String code;
-        public int level;
+        /*** 中文名*/
         public String name;
+        /*** 父id*/
         public int parentId;
-        public long createTime;
-        public int sort;
     }
 }
