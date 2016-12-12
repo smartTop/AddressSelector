@@ -36,15 +36,19 @@
 然后在你的项目里的assets目录下，放上你的数据库，名字一定是"adress.db".
 
     如果你用的是android studio 应该放在
-
-     ![image](https://github.com/smartTop/AddressSelector/blob/master/screenshots/screenshort2.png)
+ ![image](https://github.com/smartTop/AddressSelector/blob/master/screenshots/screenshort2.png)
 ###
 在源数据库里要添加一个数据
  AdressBean.ChangeRecordsBean changeRecordsBean = new AdressBean.ChangeRecordsBean();
+
         changeRecordsBean.parentId = 0;
+
         changeRecordsBean.name = "测试省";
+
         changeRecordsBean.id = 35;
+
         addressDictManager.inserddress(changeRecordsBean);
+
          ![image](https://github.com/smartTop/AddressSelector/blob/master/screenshots/screenshort3.png)
 ###
  还可以进行已下操作 增加一个数据 inserddress(AdressBean.ChangeRecordsBean adress)  增加一个集合insertAddress(List<AdressBean.ChangeRecordsBean> list)
