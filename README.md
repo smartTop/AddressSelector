@@ -33,7 +33,7 @@
 想用自己的数据源，就需要把自己的数据源里，各个字段与我的数据源里字段一一对应(id, parentId, code, name),分别对应的中文意思(id,父id(可根据父id查询下一级),地址编码,中文名字)
 然后在你的项目里的assets目录下，放上你的数据库，名字一定是"adress.db".
     如果你用的是android studio 应该放在
-     ![image](https://github.com/smartTop/AddressSelector/blob/master/screenshots/screenshot2.png)
+     ![image](https://github.com/smartTop/AddressSelector/blob/master/screenshots/screenshort2.png)
 ###
 在源数据库里要添加一个数据
  AdressBean.ChangeRecordsBean changeRecordsBean = new AdressBean.ChangeRecordsBean();
@@ -41,7 +41,7 @@
         changeRecordsBean.name = "测试省";
         changeRecordsBean.id = 35;
         addressDictManager.inserddress(changeRecordsBean);
-         ![image](https://github.com/smartTop/AddressSelector/blob/master/screenshots/screenshot3.png)
+         ![image](https://github.com/smartTop/AddressSelector/blob/master/screenshots/screenshort3.png)
  还可以进行已下操作 增加一个数据 inserddress(AdressBean.ChangeRecordsBean adress)  增加一个集合insertAddress(List<AdressBean.ChangeRecordsBean> list)
  更新数据 updateAddressInfo(AdressBean.ChangeRecordsBean adress)
  查找数据 getAddressList()
