@@ -37,6 +37,15 @@ public class MainActivity extends Activity implements View.OnClickListener, OnAd
         content = (LinearLayout) findViewById(R.id.content);
         tv_selector_area.setOnClickListener(this);
         AddressSelector selector = new AddressSelector(this);
+        selector.setTextSize(14);//设置字体的大小
+//        selector.setIndicatorBackgroundColor("#00ff00");
+        selector.setIndicatorBackgroundColor(android.R.color.holo_orange_light);//设置指示器的颜色
+//        selector.setBackgroundColor(android.R.color.holo_red_light);//设置字体的背景
+
+        selector.setTextSelectedColor(android.R.color.holo_orange_light);//设置字体获得焦点的颜色
+
+        selector.setTextUnSelectedColor(android.R.color.holo_blue_light);//设置字体没有获得焦点的颜色
+
 //        //获取数据库管理
 //        AddressDictManager addressDictManager = selector.getAddressDictManager();
 //        AdressBean.ChangeRecordsBean changeRecordsBean = new AdressBean.ChangeRecordsBean();

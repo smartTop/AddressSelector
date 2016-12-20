@@ -4,16 +4,17 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -53,6 +54,7 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
 
     private View indicator;
 
+    private LinearLayout layout_tab;
     private TextView textViewProvince;
     private TextView textViewCity;
     private TextView textViewCounty;
@@ -78,6 +80,8 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
     private static final int WHAT_STREETS_PROVIDED = 3;
     private AddressDictManager addressDictManager;
     private ImageView iv_colse;
+    private int selectedColor;
+    private int unSelectedColor;
     @SuppressWarnings("unchecked")
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
@@ -164,7 +168,7 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
         this.iv_colse = (ImageView) view.findViewById(R.id.iv_colse);
         this.listView = (ListView) view.findViewById(R.id.listView);//listview
         this.indicator = view.findViewById(R.id.indicator); //指示器
-
+        this.layout_tab = (LinearLayout) view.findViewById(R.id.layout_tab);
         this.textViewProvince = (TextView) view.findViewById(R.id.textViewProvince);//省份
         this.textViewCity = (TextView) view.findViewById(R.id.textViewCity);//城市
         this.textViewCounty = (TextView) view.findViewById(R.id.textViewCounty);//区 乡镇
@@ -177,9 +181,52 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
 
         this.listView.setOnItemClickListener(this);
         this.iv_colse.setOnClickListener(new onCloseClickListener());
+
         updateIndicator();
     }
 
+    /**
+     *设置字体选中的颜色
+     */
+     public void setTextSelectedColor(int selectedColor){
+            this.selectedColor = selectedColor;
+     }
+
+    /**
+     *设置字体没有选中的颜色
+     */
+    public void setTextUnSelectedColor(int unSelectedColor){
+            this.unSelectedColor = unSelectedColor;
+    }
+    /**
+     * 设置字体的大小
+     */
+   public void setTextSize(float dp){
+       textViewProvince.setTextSize(dp);
+       textViewCity.setTextSize(dp);
+       textViewCounty.setTextSize(dp);
+       textViewStreet.setTextSize(dp);
+   }
+
+    /**
+     * 设置字体的背景
+     */
+    public void setBackgroundColor(int colorId){
+        layout_tab.setBackgroundColor(context.getResources().getColor(colorId));
+    }
+
+    /**
+     * 设置指示器的背景
+     */
+    public void setIndicatorBackgroundColor(int colorId){
+        indicator.setBackgroundColor(context.getResources().getColor(colorId));
+    }
+    /**
+     * 设置指示器的背景
+     */
+    public void setIndicatorBackgroundColor(String color){
+        indicator.setBackgroundColor(Color.parseColor(color));
+    }
     /**
      * 初始化adapter
      */
@@ -254,8 +301,35 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
         textViewCity.setEnabled(tabIndex != INDEX_TAB_CITY);
         textViewCounty.setEnabled(tabIndex != INDEX_TAB_COUNTY);
         textViewStreet.setEnabled(tabIndex != INDEX_TAB_STREET);
+        updateTabTextColor();
     }
 
+    /**
+     * 更新字体的颜色
+     */
+    private void updateTabTextColor(){
+    if(tabIndex != INDEX_TAB_PROVINCE){
+        textViewProvince.setTextColor(context.getResources().getColor(selectedColor));
+    }else{
+        textViewProvince.setTextColor(context.getResources().getColor(unSelectedColor));
+    }
+    if(tabIndex != INDEX_TAB_CITY){
+        textViewCity.setTextColor(context.getResources().getColor(selectedColor));
+    }else{
+        textViewCity.setTextColor(context.getResources().getColor(unSelectedColor));
+    }
+    if(tabIndex != INDEX_TAB_COUNTY){
+        textViewCounty.setTextColor(context.getResources().getColor(selectedColor));
+    }else{
+        textViewCounty.setTextColor(context.getResources().getColor(unSelectedColor));
+    }
+    if(tabIndex != INDEX_TAB_STREET){
+        textViewStreet.setTextColor(context.getResources().getColor(selectedColor));
+    }else{
+        textViewStreet.setTextColor(context.getResources().getColor(unSelectedColor));
+    }
+
+}
 
     /**
      * 点击省份的监听
@@ -354,7 +428,6 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
                 textViewCounty.setText("请选择");
                 textViewStreet.setText("请选择");
                 //根据省份的id,从数据库中查询城市列表
-                Log.d("数据","省份的id"+province.id);
                 retrieveCitiesWith(province.id);
 
                 // 清空子级数据
@@ -378,7 +451,6 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
                 textViewCounty.setText("请选择");
                 textViewStreet.setText("请选择");
                 //根据城市的id,从数据库中查询城市列表
-                Log.d("数据","城市的id"+city.id);
                 retrieveCountiesWith(city.id);
                 // 清空子级数据
                 counties = null;
@@ -397,7 +469,6 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
 
                 textViewCounty.setText(county.name);
                 textViewStreet.setText("请选择");
-                Log.d("数据","乡镇的id"+county.id);
                 retrieveStreetsWith(county.id);
 
                 streets = null;
@@ -410,7 +481,6 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
                 break;
             case INDEX_TAB_STREET:
                 Street street = streetAdapter.getItem(position);
-                Log.d("数据","街道的id"+street.id);
                 textViewStreet.setText(street.name);
 
                 this.streetIndex = position;

@@ -23,6 +23,31 @@
             
     View view = selector.getView();
     content.addView(view);
+
+    //设置字体的大小
+
+ selector.setTextSize(14);
+
+ //设置指示器的背景颜色
+
+   selector.setIndicatorBackgroundColor("#00ff00");
+
+   或
+
+    selector.setIndicatorBackgroundColor(android.R.color.holo_orange_light);
+
+    //设置字体的背景
+
+    selector.setBackgroundColor(android.R.color.holo_red_light);
+
+    //设置字体获得焦点的颜色
+
+    selector.setTextSelectedColor(android.R.color.holo_orange_light);
+
+    //设置字体没有获得焦点的颜色
+
+    selector.setTextUnSelectedColor(android.R.color.holo_blue_light);
+
 ### BottomDialog
 
     BottomDialog dialog = new BottomDialog(context);
