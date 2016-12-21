@@ -24,6 +24,11 @@
     View view = selector.getView();
     content.addView(view);
 
+    默认的样式
+         ![image](https://github.com/smartTop/AddressSelector/blob/master/screenshots/screenshort4.png)
+
+    自定义样式
+
     //设置字体的大小
 
  selector.setTextSize(14);
@@ -47,6 +52,7 @@
     //设置字体没有获得焦点的颜色
 
     selector.setTextUnSelectedColor(android.R.color.holo_blue_light);
+
 
 ### BottomDialog
 

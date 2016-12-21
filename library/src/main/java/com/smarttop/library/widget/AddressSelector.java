@@ -301,7 +301,9 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
         textViewCity.setEnabled(tabIndex != INDEX_TAB_CITY);
         textViewCounty.setEnabled(tabIndex != INDEX_TAB_COUNTY);
         textViewStreet.setEnabled(tabIndex != INDEX_TAB_STREET);
-        updateTabTextColor();
+        if(selectedColor!=0 && unSelectedColor!=0){
+            updateTabTextColor();
+        }
     }
 
     /**
