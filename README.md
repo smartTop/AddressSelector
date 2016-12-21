@@ -25,8 +25,7 @@
     content.addView(view);
 
     默认的样式
-
-         ![image](https://github.com/smartTop/AddressSelector/blob/master/screenshots/screenshort4.png)
+![image](https://github.com/smartTop/AddressSelector/blob/master/screenshots/screenshort4.png)
 
 
     自定义样式
