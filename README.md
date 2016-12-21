@@ -8,7 +8,7 @@
 
     dependencies {
         ...
-       compile 'com.smartTop:address-selector:1.0.4'
+       compile 'com.smartTop:address-selector:1.0.5'
     }
     
 ## 使用方法
@@ -54,7 +54,15 @@
 
     selector.setTextUnSelectedColor(android.R.color.holo_blue_light);
 
+    //自定义dialog的样式
 
+     dialog.setTextSize(14);//设置字体的大小
+     dialog.setIndicatorBackgroundColor(android.R.color.holo_orange_light);//设置指示器的颜色
+     dialog.setTextSelectedColor(android.R.color.holo_orange_light);//设置字体获得焦点的颜色
+     dialog.setTextUnSelectedColor(android.R.color.holo_blue_light);//设置字体没有获得焦点的颜色
+
+     效果图
+![image](https://github.com/smartTop/AddressSelector/blob/master/screenshots/screenshort5.png)
 ### BottomDialog
 
     BottomDialog dialog = new BottomDialog(context);
