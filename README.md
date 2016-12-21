@@ -8,7 +8,7 @@
 
     dependencies {
         ...
-       compile 'com.smartTop:address-selector:1.0.3'
+       compile 'com.smartTop:address-selector:1.0.4'
     }
     
 ## 使用方法
@@ -25,7 +25,9 @@
     content.addView(view);
 
     默认的样式
+
          ![image](https://github.com/smartTop/AddressSelector/blob/master/screenshots/screenshort4.png)
+
 
     自定义样式
 
