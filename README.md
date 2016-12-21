@@ -63,11 +63,39 @@
 
      效果图
 ![image](https://github.com/smartTop/AddressSelector/blob/master/screenshots/screenshort5.png)
-### BottomDialog
+
+
+### BottomDialog  弹出地址选择器的dialog的用法及回调
 
     BottomDialog dialog = new BottomDialog(context);
-    dialog.setOnAddressSelectedListener(listener);
+    dialog.setOnAddressSelectedListener(this);
+    dialog.setDialogDismisListener(this);
     dialog.show();
+
+       @Override
+        public void onAddressSelected(Province province, City city, County county, Street street) {
+            provinceCode = (province == null ? "" : province.code);
+            cityCode = (city == null ? "" : city.code);
+            countyCode = (county == null ? "" : county.code);
+            streetCode = (street == null ? "" : street.code);
+            LogUtil.d("数据", "省份id=" + provinceCode);
+            LogUtil.d("数据", "城市id=" + cityCode);
+            LogUtil.d("数据", "乡镇id=" + countyCode);
+            LogUtil.d("数据", "街道id=" + streetCode);
+            String s = (province == null ? "" : province.name) + (city == null ? "" : city.name) + (county == null ? "" : county.name) +
+                    (street == null ? "" : street.name);
+            tv_selector_area.setText(s);
+            if (dialog != null) {
+                dialog.dismiss();
+            }
+        }
+
+        @Override
+        public void dialogclose() {
+            if(dialog!=null){
+                dialog.dismiss();
+            }
+        }
 ###
 有朋友问，怎么使用自己的数据源，这里我说明一下，因为我的数据库里的地址表，省，市，区，县，镇，都是用同一个表，根据parentId来查询的。
 
