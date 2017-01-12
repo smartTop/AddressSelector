@@ -11,6 +11,7 @@ import com.smarttop.library.bean.City;
 import com.smarttop.library.bean.County;
 import com.smarttop.library.bean.Province;
 import com.smarttop.library.bean.Street;
+import com.smarttop.library.db.manager.AddressDictManager;
 import com.smarttop.library.utils.LogUtil;
 import com.smarttop.library.widget.AddressSelector;
 import com.smarttop.library.widget.BottomDialog;
@@ -29,6 +30,8 @@ public class MainActivity extends Activity implements View.OnClickListener, OnAd
     private String countyCode;
     private String streetCode;
     private LinearLayout content;
+    private AddressDictManager addressDictManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +40,9 @@ public class MainActivity extends Activity implements View.OnClickListener, OnAd
         content = (LinearLayout) findViewById(R.id.content);
         tv_selector_area.setOnClickListener(this);
         AddressSelector selector = new AddressSelector(this);
+        //获取地址管理数据库
+        addressDictManager = selector.getAddressDictManager();
+
         selector.setTextSize(14);//设置字体的大小
 //        selector.setIndicatorBackgroundColor("#00ff00");
         selector.setIndicatorBackgroundColor(android.R.color.holo_orange_light);//设置指示器的颜色
@@ -96,6 +102,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnAd
         if (dialog != null) {
             dialog.dismiss();
         }
+//        getSelectedArea();
     }
 
     @Override
@@ -103,5 +110,19 @@ public class MainActivity extends Activity implements View.OnClickListener, OnAd
         if(dialog!=null){
             dialog.dismiss();
         }
+    }
+
+    /**
+     * 根据code 来显示选择过的地区
+     */
+    private void getSelectedArea(){
+        String province = addressDictManager.getProvince(provinceCode);
+        String city = addressDictManager.getCity(cityCode);
+        String county = addressDictManager.getCounty(countyCode);
+        String street = addressDictManager.getStreet(streetCode);
+        LogUtil.d("数据", "省份=" + province);
+        LogUtil.d("数据", "城市=" + city);
+        LogUtil.d("数据", "乡镇=" + county);
+        LogUtil.d("数据", "街道=" + street);
     }
 }
