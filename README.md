@@ -8,7 +8,7 @@
 
     dependencies {
         ...
-        compile 'com.smarttop:jd-address:1.0.8'
+       compile 'com.smarttop:jd-address:1.1.0'
     }
     
 ## 使用方法
@@ -133,6 +133,28 @@
  获取区，乡镇对应的街道列表 getStreetList(int countyId)
 
   查找消息临时列表中是否存在这一条记录  isExist()
+
+###
+    最近在我博客上有人问我，能不能加一个功能，就是记住选择后的地址，点击编辑地址的时候，可以直接显示了。
+      用法：
+              /**
+               * 根据code 来显示选择过的地区
+               */
+              private void getSelectedArea(){
+                  //根据省份的code,从数据库里查询省份的名字
+                  String province = addressDictManager.getProvince(provinceCode);
+                  //根据城市的code,从数据库里查询城市的名字
+                  String city = addressDictManager.getCity(cityCode);
+                  //根据乡镇的code,从数据库里查询乡镇的名字
+                  String county = addressDictManager.getCounty(countyCode);
+                  //根据街道的code,从数据库里查询街道的名字
+                  String street = addressDictManager.getStreet(streetCode);
+
+                  LogUtil.d("数据", "省份=" + province);
+                  LogUtil.d("数据", "城市=" + city);
+                  LogUtil.d("数据", "乡镇=" + county);
+                  LogUtil.d("数据", "街道=" + street);
+              }
 ## 关于我
 
 **smartTop**
