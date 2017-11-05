@@ -60,7 +60,7 @@
      dialog.setIndicatorBackgroundColor(android.R.color.holo_orange_light);//设置指示器的颜色
      dialog.setTextSelectedColor(android.R.color.holo_orange_light);//设置字体获得焦点的颜色
      dialog.setTextUnSelectedColor(android.R.color.holo_blue_light);//设置字体没有获得焦点的颜色
-
+     dialog.setDisplaySelectorArea("31",1,"2704",1,"2711",0,"15582",1);//设置已选中的地区(第一个参数 省份的code,第二个参数 省份在列表中的位置,第三个参数 城市的code 第四个参数 城市在列表中的位置,...)
      效果图
 ![image](https://github.com/smartTop/AddressSelector/blob/master/screenshots/screenshort5.png)
 
@@ -70,6 +70,7 @@
     BottomDialog dialog = new BottomDialog(context);
     dialog.setOnAddressSelectedListener(this);
     dialog.setDialogDismisListener(this);
+    dialog.setSelectorAreaPositionListener(this);
     dialog.show();
 
        @Override
@@ -96,6 +97,18 @@
                 dialog.dismiss();
             }
         }
+        选中的地区在列表中的位置
+        @Override
+        public void selectorAreaPosition(int provincePosition, int cityPosition, int countyPosition, int streetPosition) {
+                this.provincePosition = provincePosition;
+                this.cityPosition = cityPosition;
+                this.countyPosition = countyPosition;
+                this.streetPosition = streetPosition;
+                LogUtil.d("数据", "省份位置=" + provincePosition);
+                LogUtil.d("数据", "城市位置=" + cityPosition);
+                LogUtil.d("数据", "乡镇位置=" + countyPosition);
+                LogUtil.d("数据", "街道位置=" + streetPosition);
+            }
 ###
 有朋友问，怎么使用自己的数据源，这里我说明一下，因为我的数据库里的地址表，省，市，区，县，镇，都是用同一个表，根据parentId来查询的。
 
@@ -136,6 +149,7 @@
 
 ###
     最近在我博客上有人问我，能不能加一个功能，就是记住选择后的地址，点击编辑地址的时候，可以直接显示了。
+     dialog.setDisplaySelectorArea("31",1,"2704",1,"2711",0,"15582",1);//设置已选中的地区(第一个参数 省份的code,第二个参数 省份在列表中的位置,第三个参数 城市的code 第四个参数 城市在列表中的位置,...)
       用法：
               /**
                * 根据code 来显示选择过的地区
@@ -155,6 +169,7 @@
                   LogUtil.d("数据", "乡镇=" + county);
                   LogUtil.d("数据", "街道=" + street);
               }
+
 ## 关于我
 
 **smartTop**
