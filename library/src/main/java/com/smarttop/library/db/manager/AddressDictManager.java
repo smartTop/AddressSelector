@@ -159,6 +159,24 @@ public class AddressDictManager {
         }
     }
     /**
+     * 获取省份
+     * @return
+     * @param provinceCode
+     */
+    public Province getProvinceBean(String provinceCode){
+        Cursor cursor = db.rawQuery("select * from " + TableField.TABLE_ADDRESS_DICT+" where "+ ADDRESS_DICT_FIELD_CODE+"=?", new String[]{provinceCode});
+        if(cursor!=null && cursor.moveToFirst()){
+            Province province =  new Province();
+            province.id = cursor.getInt(cursor.getColumnIndex(ADDRESS_DICT_FIELD_ID));
+            province.code = cursor.getString(cursor.getColumnIndex(ADDRESS_DICT_FIELD_CODE));
+            province.name = cursor.getString(cursor.getColumnIndex(TableField.ADDRESS_DICT_FIELD_NAME));
+            cursor.close();
+            return province;
+        }else{
+            return null;
+        }
+    }
+    /**
      * 获取省份对应的城市列表
      * @return
      */
@@ -193,6 +211,23 @@ public class AddressDictManager {
                return "";
            }
     }
+    /**
+     * 获取城市
+     * @return
+     */
+    public City getCityBean(String cityCode){
+        Cursor cursor = db.rawQuery("select * from " + TableField.TABLE_ADDRESS_DICT+" where "+ ADDRESS_DICT_FIELD_CODE+"=?", new String[]{cityCode});
+        if(cursor!=null && cursor.moveToFirst()){
+            City city =  new City();
+            city.id = cursor.getInt(cursor.getColumnIndex(ADDRESS_DICT_FIELD_ID));
+            city.code = cursor.getString(cursor.getColumnIndex(ADDRESS_DICT_FIELD_CODE));
+            city.name = cursor.getString(cursor.getColumnIndex(TableField.ADDRESS_DICT_FIELD_NAME));
+            cursor.close();
+            return city;
+        }else{
+            return null;
+        }
+    }
 
     /**
      * 获取城市对应的区，乡镇列表
@@ -224,6 +259,19 @@ public class AddressDictManager {
                return "";
            }
     }
+    public County getCountyBean(String countyCode){
+        Cursor cursor = db.rawQuery("select * from " + TableField.TABLE_ADDRESS_DICT+" where "+ ADDRESS_DICT_FIELD_CODE+"=?", new String[]{countyCode});
+        if(cursor!=null && cursor.moveToFirst()){
+            County county = new County();
+            county.id = cursor.getInt(cursor.getColumnIndex(ADDRESS_DICT_FIELD_ID));
+            county.code = cursor.getString(cursor.getColumnIndex(ADDRESS_DICT_FIELD_CODE));
+            county.name = cursor.getString(cursor.getColumnIndex(TableField.ADDRESS_DICT_FIELD_NAME));
+            cursor.close();
+            return  county;
+        }else{
+            return null;
+        }
+    }
     /**
      * 获取区，乡镇对应的街道列表
      * @return
@@ -253,6 +301,19 @@ public class AddressDictManager {
             return street.name;
         }else{
             return "";
+        }
+    }
+    public Street getStreetBean(String streetCode){
+        Cursor cursor = db.rawQuery("select * from " + TableField.TABLE_ADDRESS_DICT+" where "+ ADDRESS_DICT_FIELD_CODE+"=?", new String[]{streetCode});
+        if(cursor!=null && cursor.moveToFirst()){
+            Street street = new Street();
+            street.id = cursor.getInt(cursor.getColumnIndex(ADDRESS_DICT_FIELD_ID));
+            street.code = cursor.getString(cursor.getColumnIndex(ADDRESS_DICT_FIELD_CODE));
+            street.name = cursor.getString(cursor.getColumnIndex(TableField.ADDRESS_DICT_FIELD_NAME));
+            cursor.close();
+            return street;
+        }else{
+            return null;
         }
     }
     /**

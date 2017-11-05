@@ -53,7 +53,6 @@ public class BottomDialog extends Dialog {
     public void setOnAddressSelectedListener(OnAddressSelectedListener listener) {
         this.selector.setOnAddressSelectedListener(listener);
     }
-
     public static BottomDialog show(Context context) {
         return show(context, null);
     }
@@ -67,6 +66,14 @@ public class BottomDialog extends Dialog {
     }
     public void setDialogDismisListener(AddressSelector.OnDialogCloseListener listener){
         this.selector.setOnDialogCloseListener(listener);
+    }
+
+    /**
+     * 设置选中位置的监听
+     * @param listener
+     */
+    public void setSelectorAreaPositionListener(AddressSelector.onSelectorAreaPositionListener listener){
+        this.selector.setOnSelectorAreaPositionListener(listener);
     }
     /**
      *设置字体选中的颜色
@@ -104,4 +111,20 @@ public class BottomDialog extends Dialog {
     public void setIndicatorBackgroundColor(String color){
         this.selector.setIndicatorBackgroundColor(color);
     }
+
+    /**
+     * 设置已选中的地区
+     * @param provinceCode 省份code
+     * @param provinPosition 省份所在的位置
+     * @param cityCode   城市code
+     * @param cityPosition  城市所在的位置
+     * @param countyCode     乡镇code
+     * @param countyPosition  乡镇所在的位置
+     * @param streetCode      街道code
+     * @param streetPosition  街道所在位置
+     */
+    public void setDisplaySelectorArea(String provinceCode,int provinPosition,String cityCode,int cityPosition,String countyCode,int countyPosition,String streetCode,int streetPosition){
+        this.selector.getSelectedArea(provinceCode,provinPosition,cityCode,cityPosition,countyCode,countyPosition,streetCode,streetPosition);
+    }
+
 }

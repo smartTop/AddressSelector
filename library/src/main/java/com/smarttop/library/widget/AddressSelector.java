@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import com.smarttop.library.bean.Province;
 import com.smarttop.library.bean.Street;
 import com.smarttop.library.db.manager.AddressDictManager;
 import com.smarttop.library.utils.Lists;
+import com.smarttop.library.utils.LogUtil;
 
 import java.util.List;
 
@@ -73,6 +75,7 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
     private List<Street> streets;
     private OnAddressSelectedListener listener;
     private OnDialogCloseListener dialogCloseListener;
+    private onSelectorAreaPositionListener selectorAreaPositionListener;
 
     private static final int WHAT_PROVINCES_PROVIDED = 0;
     private static final int WHAT_CITIES_PROVIDED = 1;
@@ -82,6 +85,10 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
     private ImageView iv_colse;
     private int selectedColor;
     private int unSelectedColor;
+    public int provincePostion;
+    public int cityPosition;
+    public int countyPosition;
+    public int streetPosition;
     @SuppressWarnings("unchecked")
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
@@ -181,7 +188,6 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
 
         this.listView.setOnItemClickListener(this);
         this.iv_colse.setOnClickListener(new onCloseClickListener());
-
         updateIndicator();
     }
 
@@ -423,7 +429,7 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
         switch (tabIndex) {
             case INDEX_TAB_PROVINCE: //省份
                 Province province = provinceAdapter.getItem(position);
-
+                provincePostion = position;
                 // 更新当前级别及子级标签文本
                 textViewProvince.setText(province.name);
                 textViewCity.setText("请选择");
@@ -449,6 +455,7 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
                 break;
             case INDEX_TAB_CITY://城市
                 City city = cityAdapter.getItem(position);
+                cityPosition = position;
                 textViewCity.setText(city.name);
                 textViewCounty.setText("请选择");
                 textViewStreet.setText("请选择");
@@ -468,7 +475,7 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
                 break;
             case INDEX_TAB_COUNTY:
                 County county = countyAdapter.getItem(position);
-
+                countyPosition = position;
                 textViewCounty.setText(county.name);
                 textViewStreet.setText("请选择");
                 retrieveStreetsWith(county.id);
@@ -483,6 +490,7 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
                 break;
             case INDEX_TAB_STREET:
                 Street street = streetAdapter.getItem(position);
+                streetPosition = position;
                 textViewStreet.setText(street.name);
 
                 this.streetIndex = position;
@@ -490,6 +498,9 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
                 streetAdapter.notifyDataSetChanged();
 
                 callbackInternal();
+                if(selectorAreaPositionListener!=null){
+                    selectorAreaPositionListener.selectorAreaPosition(provincePostion,cityPosition,countyPosition,streetPosition);
+                }
 
                 break;
         }
@@ -793,6 +804,91 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
      */
     public void setOnDialogCloseListener(OnDialogCloseListener listener) {
         this.dialogCloseListener = listener;
+    }
+    public interface onSelectorAreaPositionListener{
+        void selectorAreaPosition(int provincePosition,int cityPosition,int countyPosition,int streetPosition);
+    }
+    public void setOnSelectorAreaPositionListener(onSelectorAreaPositionListener listener){
+        this.selectorAreaPositionListener = listener;
+    }
+
+    /**
+     * 根据code 来显示选择过的地区
+     */
+    public void getSelectedArea(String provinceCode,int provincePostion,String cityCode,int cityPosition,String countyCode,int countyPosition,String streetCode,int streetPosition){
+        LogUtil.d("数据", "getSelectedArea省份id=" + provinceCode);
+        LogUtil.d("数据", "getSelectedArea城市id=" + cityCode);
+        LogUtil.d("数据", "getSelectedArea乡镇id=" + countyCode);
+        LogUtil.d("数据", "getSelectedArea 街道id=" + streetCode);
+        if(!TextUtils.isEmpty(provinceCode)){
+            Province province = addressDictManager.getProvinceBean(provinceCode);
+            textViewProvince.setText(province.name);
+            LogUtil.d("数据", "省份=" + province);
+            // 更新当前级别及子级标签文本
+            //根据省份的id,从数据库中查询城市列表
+            retrieveCitiesWith(province.id);
+
+            // 清空子级数据
+            cities = null;
+            counties = null;
+            streets = null;
+            cityAdapter.notifyDataSetChanged();
+            countyAdapter.notifyDataSetChanged();
+            streetAdapter.notifyDataSetChanged();
+            // 更新已选中项
+            this.provinceIndex = provincePostion;
+            this.cityIndex = INDEX_INVALID;
+            this.countyIndex = INDEX_INVALID;
+            this.streetIndex = INDEX_INVALID;
+            // 更新选中效果
+            provinceAdapter.notifyDataSetChanged();
+        }
+        if(!TextUtils.isEmpty(cityCode)){
+            City city = addressDictManager.getCityBean(cityCode);
+            textViewCity.setText(city.name);
+            LogUtil.d("数据", "城市=" + city.name);
+            //根据城市的id,从数据库中查询城市列表
+            retrieveCountiesWith(city.id);
+            // 清空子级数据
+            counties = null;
+            streets = null;
+            countyAdapter.notifyDataSetChanged();
+            streetAdapter.notifyDataSetChanged();
+            // 更新已选中项
+            this.cityIndex = cityPosition;
+            this.countyIndex = INDEX_INVALID;
+            this.streetIndex = INDEX_INVALID;
+            // 更新选中效果
+            cityAdapter.notifyDataSetChanged();
+
+        }
+        if(!TextUtils.isEmpty(countyCode)){
+            County county = addressDictManager.getCountyBean(countyCode);
+            textViewCounty.setText(county.name);
+            LogUtil.d("数据", "乡镇=" + county.name);
+            retrieveStreetsWith(county.id);
+
+            streets = null;
+            streetAdapter.notifyDataSetChanged();
+
+            this.countyIndex = countyPosition;
+            this.streetIndex = INDEX_INVALID;
+
+            countyAdapter.notifyDataSetChanged();
+        }
+        if(!TextUtils.isEmpty(streetCode)){
+            Street street = addressDictManager.getStreetBean(streetCode);
+            textViewStreet.setText(street.name);
+            LogUtil.d("数据", "街道=" + street.name);
+
+            this.streetIndex = streetPosition;
+
+            streetAdapter.notifyDataSetChanged();
+
+
+
+        }
+        callbackInternal();
     }
 
 }
