@@ -22,6 +22,13 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.0.1'
 }
+ext {
+    PUBLISH_GROUP_ID = 'com.smartTop'//开发者名称
+    PUBLISH_ARTIFACT_ID ='jd-address'//你项目的名字（最好都是小写）
+    PUBLISH_VERSION = '1.0.3'//(版本号)
+}
+
+apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
 
 
 

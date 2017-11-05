@@ -8,7 +8,7 @@
 
     dependencies {
         ...
-       compile 'com.smarttop:jd-address:1.1.0'
+        compile 'com.smartTop:jd-address:1.0.3'
     }
     
 ## 使用方法
